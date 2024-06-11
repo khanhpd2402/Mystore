@@ -29,7 +29,7 @@ public partial class MyStoreContext : DbContext
             .AddJsonFile("appsettings.json")
             .Build();
 
-        optionsBuilder.UseSqlServer(conf.GetConnectionString("ConnectionStrings"));
+        optionsBuilder.UseSqlServer(conf.GetConnectionString("DbConnection"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
