@@ -1,0 +1,28 @@
+﻿@page
+@model MyStore.Pages.EditStaffModel
+@{
+}
+<h2>Edit Staff</h2>
+
+<form method="post">
+    <input asp-for="Staff.StaffId" hidden class="form-control" />
+    <div class="form-group">
+        <label asp-for="Staff.Name"></label>
+        <input asp-for="Staff.Name" class="form-control" />
+        <span asp-validation-for="Staff.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Staff.Password"></label>
+        <input asp-for="Staff.Password" class="form-control" />
+        <span asp-validation-for="Staff.Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Staff.Role"></label>
+        <input asp-for="Staff.Role" class="form-control" />
+        <span asp-validation-for="Staff.Role" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+<a asp-page="ListStaff">Back to List</a>

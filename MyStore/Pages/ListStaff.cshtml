@@ -1,0 +1,41 @@
+﻿@page 
+@model MyStore.Pages.ListStaffModel
+@{
+}
+
+<form method="get">
+    <div class="form-group">
+        <label for="SearchString">Search by Name:</label>
+        <input type="text" name="SearchString" value="@Model.SearchString" class="form-control" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </div>
+</form>
+
+<p>
+    <a asp-page="CreateStaff">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Staff ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.StaffList)
+        {
+                <tr>
+                    <td>@item.StaffId</td>
+                    <td>@item.Name</td>
+                    <td>@item.Role</td>
+                        <td>
+                            <a asp-page="EditStaff" asp-route-id="@item.StaffId">Edit</a> |
+                            <a asp-page="DetailStaff" asp-route-id="@item.StaffId">Details</a> |
+                            <a asp-page="DeleteStaff" asp-route-id="@item.StaffId">Delete</a>
+                        </td>
+                </tr>
+        }
+    </tbody>
+</table>
