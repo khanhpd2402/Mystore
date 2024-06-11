@@ -23,6 +23,13 @@ namespace MyStore.Pages
             {
                 return Page();
             }
+            // Check for duplicate staff name
+            var existingStaff = _context.Staffs.FirstOrDefault(s => s.Name == Staff.Name);
+            if (existingStaff != null)
+            {
+                ModelState.AddModelError("Staff.Name", "A staff member with this name already exists.");
+                return Page();
+            }
 
             _context.Staffs.Add(Staff);
             await _context.SaveChangesAsync();
