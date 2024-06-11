@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Test.styles.css" asp-append-version="true" />
 
-    <!-- Title Page-->
-    <title>Dashboard</title>
-
     <!-- Fontfaces CSS-->
     <link href="~/css/font-face.css" rel="stylesheet" media="all">
     <link href="~/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -54,51 +51,30 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li >
+                        <li>
                             <a href="#">
-                                <i class="fas fa-tachometer-alt"></i>Product
+                                <i class="fas fa-archive"></i>Products
+                            </a>                           
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fas  fa-square"></i>Categories
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="fas fa-chart-bar"></i>Categories
+                                <i class="fas fa-shopping-cart"></i>Order
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-page="ListStaff">
+                                <i class="far fa-user"></i>Staff Manager
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="fas fa-table"></i>Staff Manage
+                                <i class="fas fa-chart-bar"></i>Report
                             </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="far fa-check-square"></i>Order
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-calendar-alt"></i>Report
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-map-marker-alt"></i>Maps
-                            </a>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
-                            </ul>
                         </li>
                         
                     </ul>
@@ -171,9 +147,9 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
+                            <form class="form-header" >
                                 <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                                <button class="au-btn--submit" type="submit">
+                                <button class="au-btn--submit">
                                     <i class="zmdi zmdi-search"></i>
                                 </button>
                             </form>
@@ -307,30 +283,20 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">john doe</a>
+                                                         <a asp-area="" asp-page="profile">@ViewData["Name"]</a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span class="email">@ViewData["Role"]</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a href="#">
+                                                    <a asp-area="" asp-page="profile">
                                                         <i class="zmdi zmdi-account"></i>Account
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                               <a asp-area="" asp-page="Index">
                                                     <i class="zmdi zmdi-power"></i>Logout
                                                 </a>
                                             </div>

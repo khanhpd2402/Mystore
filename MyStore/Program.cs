@@ -1,10 +1,21 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
+using MyStore.Pages;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Thêm dịch vụ cần thiết cho session
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(60); // Thời gian hết hạn của session
+    options.Cookie.HttpOnly = true; // Chỉ truy cập session thông qua HTTP
+    options.Cookie.IsEssential = true; // Bắt buộc session cookie
+});
 
 //thieu o day
 builder.Services.AddDbContext<MyStoreContext>(options =>
@@ -23,7 +34,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession(); // Sử dụng session
+//app.UseMiddleware<AuthenticationMiddleware>(); // Sử dụng Middleware kiểm tra đăng nhập ở đây
 app.UseRouting();
 
 app.UseAuthorization();
