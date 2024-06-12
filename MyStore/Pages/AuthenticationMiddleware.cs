@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using MyStore.Models;
+using Newtonsoft.Json;
 
 public class AuthenticationMiddleware
 {
@@ -19,7 +23,7 @@ public class AuthenticationMiddleware
             if (!context.Request.Path.StartsWithSegments("/"))
             {
                 // Nếu không, chuyển hướng đến trang đăng nhập
-                context.Response.Redirect("/");
+                context.Response.Redirect("/Index");
                 return;
             }
         }
