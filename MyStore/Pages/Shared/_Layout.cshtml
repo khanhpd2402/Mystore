@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json;
+@using MyStore.Models;
+@{
+    // Lấy chuỗi JSON từ session
+    var jsonStaff = Context.Session.GetString("Staff");
+
+    // Chuyển chuỗi JSON thành đối tượng User (đảm bảo đối tượng User phải có cấu trúc tương ứng với định dạng JSON đã lưu)
+    var staff = JsonSerializer.Deserialize<Staff>(jsonStaff);
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -51,32 +60,48 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-archive"></i>Products
-                            </a>                           
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas  fa-square"></i>Categories
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-shopping-cart"></i>Order
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-page="ListStaff">
-                                <i class="far fa-user"></i>Staff Manager
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-chart-bar"></i>Report
-                            </a>
-                        </li>
-                        
+                        @if (staff != null)
+                        {
+                            @if (staff.Role == 1)
+                            {
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-archive"></i>Products
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas  fa-square"></i>Categories
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-chart-bar"></i>Report
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-page="ListStaff">
+                                        <i class="far fa-user"></i>Staff Manager
+                                    </a>
+                                </li>
+                            }
+                            @if (staff.Role == 0)
+                            {
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-chart-bar"></i>Report
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-shopping-cart"></i>Order
+                                    </a>
+                                </li>
+                            }
+                        }
+
+
                     </ul>
                 </div>
             </nav>
@@ -92,49 +117,67 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-archive"></i>Products
-                            </a>                           
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas  fa-square"></i>Categories
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-shopping-cart"></i>Order
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-page="ListStaff">
-                                <i class="far fa-user"></i>Staff Manager
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-page="Report/Orders">
-                                <i class="fas fa-chart-bar"></i>Report
-                            </a>
-                        </li>
-                        
+                        @if (staff != null)
+                        {
+                            @*admin*@
+                            @if (staff.Role == 1)
+                            {
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-archive"></i>Products
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas  fa-square"></i>Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-page="ListStaff">
+                                        <i class="far fa-user"></i>Staff Manager
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-chart-bar"></i>Report
+                                    </a>
+                                </li>
+                            }
+                            @*staff*@
+                            @if (staff.Role == 0)
+                            {
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-chart-bar"></i>Report
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-shopping-cart"></i>Order
+                                    </a>
+                                </li>
+
+                            }
+                        }
+
+
                         @*List nếu cần dùng*@
-@*                        <li class="has-sub">
+                        @*                        <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages
+                            <i class="fas fa-copy"></i>Pages
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
+                            <li>
+                            <a href="login.html">Login</a>
+                            </li>
+                            <li>
+                            <a href="register.html">Register</a>
+                            </li>
+                            <li>
+                            <a href="forget-pass.html">Forget Password</a>
+                            </li>
                             </ul>
-                        </li>*@                     
+                            </li>*@
                     </ul>
                 </nav>
             </div>
@@ -147,7 +190,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <form class="form-header" >
+                            <form class="form-header">
                                 <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit">
                                     <i class="zmdi zmdi-search"></i>
@@ -272,20 +315,35 @@
                                             <img src="@Url.Content("~/assets/img/icon/avatar-01.jpg")" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">Name</a>
+                                            <a asp-area="" asp-page="profile">
+                                                @if (staff != null)
+                                                {
+                                                    @staff.Name
+                                                }
+                                            </a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
-                                                    <a href="#">
-                                                        <img src="@Url.Content("~/assets/img/icon/avatar-01.jpg")" alt="John Doe" />
+                                                    <a asp-area="" asp-page="profile">
+                                                        <img src="@Url.Content("~/assets/img/icon/avatar-01.jpg")" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                         <a asp-area="" asp-page="profile">@ViewData["Name"]</a>
+                                                        <a asp-area="" asp-page="profile">
+                                                            @if (staff != null)
+                                                            {
+                                                                <span>@staff.Name</span>
+                                                            }
+                                                        </a>
                                                     </h5>
-                                                    <span class="email">@ViewData["Role"]</span>
+                                                    <span class="email">
+                                                        @if (staff != null)
+                                                        {
+                                                            <span>@(staff.Role == 1 ? "Admin" : "Staff")</span>
+                                                        }
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -296,7 +354,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                               <a asp-area="" asp-page="Index">
+                                                <a asp-area="" asp-page-handler="Logout" asp-page="Index">
                                                     <i class="zmdi zmdi-power"></i>Logout
                                                 </a>
                                             </div>
@@ -346,6 +404,7 @@
 
     <!-- Main JS-->
     <script src="~/js/main.js"></script>
+    <script src="~/js/custom.js"></script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

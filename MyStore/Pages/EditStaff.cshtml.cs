@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyStore.Pages
 {
@@ -31,6 +33,11 @@ namespace MyStore.Pages
         {
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+            if (await NameExists(Staff.Name, Staff.StaffId))
+            {
+                ModelState.AddModelError("Staff.Name", "The name already exists. Please choose a different name.");
                 return Page();
             }
 
@@ -69,6 +76,10 @@ namespace MyStore.Pages
         private bool StaffExists(int id)
         {
             return _context.Staffs.Any(e => e.StaffId == id);
+        }
+        private async Task<bool> NameExists(string name, int id)
+        {
+            return await _context.Staffs.AnyAsync(e => e.Name == name && e.StaffId != id);
         }
     }
 }
