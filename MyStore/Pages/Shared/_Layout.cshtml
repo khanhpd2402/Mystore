@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+   
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,7 +9,7 @@
     <title>@ViewData["Title"] - Test</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Test.styles.css" asp-append-version="true" />
+
 
     <!-- Title Page-->
     <title>Dashboard</title>
@@ -55,7 +58,7 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li >
-                            <a href="#">
+                            <a  asp-page="/Products/Index">
                                 <i class="fas fa-tachometer-alt"></i>Product
                             </a>
                         </li>
@@ -117,9 +120,9 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li>
-                            <a href="#">
-                                <i class="fas fa-archive"></i>Products
-                            </a>                           
+                            <a asp-page="/Products/Index">
+                                <i class="fas fa-tachometer-alt"></i>Product
+                            </a>
                         </li>
                         <li>
                             <a href="#">
@@ -171,12 +174,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                                <button class="au-btn--submit" type="submit">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
-                            </form>
+                           
                             <div class="header-button">
                                 <div class="noti-wrap">
                                     <div class="noti__item js-item-menu">
@@ -374,7 +372,7 @@
     </script>
     <script src="~/vendor/circle-progress/circle-progress.min.js"></script>
     <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
+   
     <script src="~/vendor/select2/select2.min.js">
     </script>
 
@@ -384,6 +382,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

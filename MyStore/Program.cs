@@ -1,7 +1,10 @@
+using MyStore.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<MyStoreContext>();  
 
 var app = builder.Build();
 
@@ -22,4 +25,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Products/Index");
+    return Task.CompletedTask;
+});
 app.Run();
