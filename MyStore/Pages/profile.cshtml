@@ -6,35 +6,91 @@
 <div class="d-flex justify-content-center">
     <div class="col-lg-6">
         <div class="card">
-            <div class="card-header">Example Form</div>
+            <div class="card-header">Profile</div>
             <div class="card-body card-block">
-                <form action="" method="post" class="">
+                <form method="post" id="profileForm" asp-page-handler="EditUsername">
+                     <input asp-for="Staff.StaffId" hidden class="form-control" />
                     <div class="form-group">
+                        @if (Model.ErrorMessage != null)
+                        {
+                            <p style="color:red;">@Model.ErrorMessage</p>
+                        }
+                         @if (Model.ErrorMessage2 != null)
+                        {
+                            <p style="color:red;">@Model.ErrorMessage2</p>
+                        }
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-user"></i>
                             </div>
-                            <input type="text" id="username" name="username" placeholder="Username" class="form-control">
+                            <input type="text" id="username" name="username" placeholder="Username" disabled class="form-control"   asp-for="Staff.Name" >
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
-                                <i class="fa fa-asterisk"></i>
+                                <i class="fa  fa-key"></i>
                             </div>
-                            <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+                            <input type="text" id="role" name="role" placeholder="Role" class="form-control" value="@(Model.Staff.Role == 1 ? "Admin" : "Staff")" disabled>
                         </div>
                     </div>
                     <div class="form-actions form-group">
-                        <button type="submit" class="btn btn-success btn-sm">
-                            <i class="fa fa-dot-circle-o"></i> Submit
+                        <button type="submit" class="btn btn-success btn-sm" id="submitlEditUserNameBtn" hidden>
+                            <i class="fa a-check-square-o"></i> Submit
                         </button>
-                        <button type="reset" class="btn btn-danger btn-sm">
-                            <i class="fa fa-ban"></i> Reset
+                        <button type="button" class="btn btn-danger btn-sm" id="cancelEditUserNameBtn" hidden>
+                            <i class="fa fa-ban"></i> Cancel
                         </button>
                     </div>
                 </form>
+                <div id="changpassDiv" hidden>
+                    <form method="post" id="changpassForm" asp-page-handler="ChangePassword">
+                       
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-asterisk"></i>
+                                </div>
+                                <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-asterisk"></i>
+                                </div>
+                                <input type="password" id="newPassword1" name="newPassword1" placeholder="New Password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-asterisk"></i>
+                                </div>
+                                <input type="password" id="newPassword2" name="newPassword2" placeholder="Re-Password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-actions form-group">
+                            <button type="submit" class="btn btn-success btn-sm" id="submitChangePassBtn" hidden>
+                                <i class="fa a-check-square-o"></i> Submit
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm" id="cancelChangePassBtn" hidden>
+                                <i class="fa fa-ban"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-info btn-sm" id="editUserNameBtn">
+                        <i class="fa fa-pencil"></i> Edit User Name
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" id="changePasswordBtn">
+                        <i class="fa fa-unlock"></i> Change Password
+                    </button>
+
+                </div>
             </div>
         </div>
     </div>
+
 </div>

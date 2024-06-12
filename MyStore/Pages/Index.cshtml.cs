@@ -24,9 +24,9 @@ namespace MyStore.Pages
         public void OnGet()
         {
         }
-        public IActionResult OnPost()
+        public  IActionResult OnPost()
         {
-            // Kiểm tra thông tin đăng nhập (giả định, kiểm tra từ cơ sở dữ liệu)
+          
             var staff = _context.Staffs.FirstOrDefault(x => x.Name == Username && x.Password == Password);
             if (staff != null)
             {
