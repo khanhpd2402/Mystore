@@ -174,7 +174,12 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                           
+                           <form id="searchForm" class="form-inline my-2 my-lg-0" asp-page="/Products/Index" method="post">
+
+                            <input class="form-control mr-sm-2" type="text"  name="Name" placeholder="Search for products..." aria-label="Search">
+                             <input class="form-control mr-sm-2" type="number" name="UnitPrice" placeholder="Search for UnitPrice..." aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                         </form>
                             <div class="header-button">
                                 <div class="noti-wrap">
                                     <div class="noti__item js-item-menu">
