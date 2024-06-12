@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
+using Newtonsoft.Json;
 
 namespace MyStore.Pages.Report
 {
@@ -16,6 +17,7 @@ namespace MyStore.Pages.Report
         public DateTime EndDate { get; set; }
 
         public string CurrentFilter { get; set; }
+
         public OrdersModel(MyStore.Models.MyStoreContext context)
         {
             _context = context;
@@ -23,13 +25,21 @@ namespace MyStore.Pages.Report
 
         public IList<Order> Order { get; set; } = default!;
 
-        public async Task OnGetAsync(DateTime? startDate, DateTime? endDate, string searchString)
+        public async Task<IActionResult> OnGetAsync(DateTime? startDate, DateTime? endDate, string searchString)
         {
-            int role = 1;
-            int staff = 2;
+
+            var sessionData = HttpContext.Session.GetString("Staff");
+            if (sessionData == null)
+            {
+                return RedirectToPage("/Index");
+            }
+
+            var currentUser = JsonConvert.DeserializeObject<Staff>(sessionData);
+            int role = currentUser.Role;
+            int staffId = currentUser.StaffId;
+
             CurrentFilter = searchString;
 
-            // Use provided date range or set default values
             StartDate = startDate ?? DateTime.Today.AddMonths(-1);
             EndDate = endDate ?? DateTime.Today;
 
@@ -43,15 +53,15 @@ namespace MyStore.Pages.Report
             else
             {
                 query = query.Include(o => o.Staff)
-                             .Where(o => o.Staff.StaffId == staff)
+                             .Where(o => o.Staff.StaffId == staffId)
                              .Where(o => o.OrderDate >= StartDate && o.OrderDate <= EndDate);
             }
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                if (int.TryParse(searchString, out int staffId))
+                if (int.TryParse(searchString, out int searchStaffId))
                 {
-                    query = query.Where(s => s.Staff.StaffId == staffId || s.Staff.Name.Contains(searchString));
+                    query = query.Where(s => s.Staff.StaffId == searchStaffId || s.Staff.Name.Contains(searchString));
                 }
                 else
                 {
@@ -60,6 +70,8 @@ namespace MyStore.Pages.Report
             }
 
             Order = await query.ToListAsync();
+
+            return Page();
         }
     }
 }
