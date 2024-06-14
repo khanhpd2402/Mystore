@@ -45,9 +45,4 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.MapGet("/", context =>
-{
-    context.Response.Redirect("/Products/Index");
-    return Task.CompletedTask;
-});
 app.Run();

@@ -6,7 +6,7 @@
 
     // Chuyển chuỗi JSON thành đối tượng User (đảm bảo đối tượng User phải có cấu trúc tương ứng với định dạng JSON đã lưu)
     var staff = JsonSerializer.Deserialize<Staff>(jsonStaff);
-    
+
 }
 
 <!DOCTYPE html>
@@ -67,11 +67,11 @@
                         {
                             @if (staff.Role == 1)
                             {
-                                <li >
-                            <a  asp-page="/Products/Index">
-                                <i class="fas fa-tachometer-alt"></i>Product
-                            </a>
-                        </li>
+                                <li>
+                                    <a asp-page="/Products/Index">
+                                        <i class="fas fa-tachometer-alt"></i>Product
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="#">
                                         <i class="fas  fa-square"></i>Categories
@@ -126,10 +126,10 @@
                             @if (staff.Role == 1)
                             {
                                 <li>
-                            <a asp-page="/Products/Index">
-                                <i class="fas fa-tachometer-alt"></i>Product
-                            </a>
-                        </li>
+                                    <a asp-page="/Products/Index">
+                                        <i class="fas fa-tachometer-alt"></i>Product
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="#">
                                         <i class="fas  fa-square"></i>Categories
@@ -141,7 +141,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a asp-page="/Report/Orders">
                                         <i class="fas fa-chart-bar"></i>Report
                                     </a>
                                 </li>
@@ -150,7 +150,7 @@
                             @if (staff.Role == 0)
                             {
                                 <li>
-                                    <a href="#">
+                                    <a asp-page="/Report/Orders">
                                         <i class="fas fa-chart-bar"></i>Report
                                     </a>
                                 </li>
@@ -352,13 +352,13 @@
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a asp-area="" asp-page="profile">
+                                                    <a asp-area="" asp-page="/profile">
                                                         <i class="zmdi zmdi-account"></i>Account
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a asp-area="" asp-page-handler="Logout" asp-page="Index">
+                                                <a asp-area="" asp-page-handler="Logout" asp-page="/Index">
                                                     <i class="zmdi zmdi-power"></i>Logout
                                                 </a>
                                             </div>
@@ -402,7 +402,7 @@
     </script>
     <script src="~/vendor/circle-progress/circle-progress.min.js"></script>
     <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-   
+
     <script src="~/vendor/select2/select2.min.js">
     </script>
 
