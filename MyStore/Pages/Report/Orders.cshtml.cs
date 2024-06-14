@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
+using Newtonsoft.Json;
 
 namespace MyStore.Pages.Report
 {
@@ -15,6 +16,8 @@ namespace MyStore.Pages.Report
         [BindProperty(SupportsGet = true)]
         public DateTime EndDate { get; set; }
 
+        public string CurrentFilter { get; set; }
+
         public OrdersModel(MyStore.Models.MyStoreContext context)
         {
             _context = context;
@@ -22,31 +25,53 @@ namespace MyStore.Pages.Report
 
         public IList<Order> Order { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(DateTime? startDate, DateTime? endDate, string searchString)
         {
-            if (StartDate == DateTime.MinValue && EndDate == DateTime.MinValue)
+
+            var sessionData = HttpContext.Session.GetString("Staff");
+            if (sessionData == null)
             {
-                // Nếu không có ngày bắt đầu và kết thúc được cung cấp, lấy tất cả đơn hàng
-                StartDate = DateTime.Today.AddMonths(-1);
-                EndDate = DateTime.Today;
-                if (_context.Orders != null)
-                {
-                    Order = await _context.Orders
-                    .Include(o => o.Staff)
-                    .ToListAsync();
-                }
+                return RedirectToPage("/Index");
+            }
+
+            var currentUser = JsonConvert.DeserializeObject<Staff>(sessionData);
+            int role = currentUser.Role;
+            int staffId = currentUser.StaffId;
+
+            CurrentFilter = searchString;
+
+            StartDate = startDate ?? DateTime.Today.AddMonths(-1);
+            EndDate = endDate ?? DateTime.Today;
+
+            IQueryable<Order> query = _context.Orders;
+
+            if (role == 1)
+            {
+                query = query.Include(o => o.Staff)
+                             .Where(o => o.OrderDate >= StartDate && o.OrderDate <= EndDate);
             }
             else
             {
-                // Nếu có ngày bắt đầu và kết thúc, lọc theo khoảng ngày
-                if (_context.Orders != null)
+                query = query.Include(o => o.Staff)
+                             .Where(o => o.Staff.StaffId == staffId)
+                             .Where(o => o.OrderDate >= StartDate && o.OrderDate <= EndDate);
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                if (int.TryParse(searchString, out int searchStaffId))
                 {
-                    Order = await _context.Orders
-                    .Include(o => o.Staff)
-                    .Where(o => o.OrderDate >= StartDate && o.OrderDate <= EndDate)
-                    .ToListAsync();
+                    query = query.Where(s => s.Staff.StaffId == searchStaffId || s.Staff.Name.Contains(searchString));
+                }
+                else
+                {
+                    query = query.Where(s => s.Staff.Name.Contains(searchString));
                 }
             }
+
+            Order = await query.ToListAsync();
+
+            return Page();
         }
     }
 }

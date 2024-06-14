@@ -16,6 +16,7 @@ namespace MyStore.Pages.Report
 
         public IList<OrderDetail> OrderDetail { get; set; } = default!;
 
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.OrderDetails == null)

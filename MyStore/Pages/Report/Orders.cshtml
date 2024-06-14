@@ -24,6 +24,16 @@
 </form>
 <br />
 
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by First or Last name: <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-default" /> ||
+            <a href="/Report/Orders">Back to full List</a>
+        </p>
+    </div>
+</form>
+
 
 
 <div class="table-responsive table--no-card m-b-30">
