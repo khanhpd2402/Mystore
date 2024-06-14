@@ -1,0 +1,90 @@
+﻿@page
+@model MyStore.Pages.Report.OrdersModel
+
+@{
+    ViewData["Title"] = "Orders";
+}
+<h1 class="title-5 m-b-35">Orders</h1>
+
+<form >
+    <!-- Các trường nhập liệu -->
+    <div>
+        <label asp-for="StartDate">Ngày bắt đầu:</label>
+        <input asp-for="StartDate" type="date" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+    </div>
+    <div>
+        <label asp-for="EndDate">Ngày kết thúc:</label>
+        <input asp-for="EndDate" type="date" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <!-- Nút để gửi form -->
+    <button type="submit" class="au-btn-filter">
+        <i class="zmdi zmdi-filter-list"></i>Filter
+    </button>
+</form>
+<br />
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by First or Last name: <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-default" /> ||
+            <a href="/Report/Orders">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+
+
+<div class="table-responsive table--no-card m-b-30">
+    <table class="table table-borderless table-striped table-earning">
+        <thead>
+            <tr>
+                <th>order ID</th>
+                <th>date</th>
+                <th>Staff ID</th>
+                <th>name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order)
+            {
+            <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Staff.StaffId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Staff.Name)
+                    </td>
+                    <td>
+                        <a asp-page="./OrderDetails" asp-route-id="@item.OrderId">Details</a>
+                    </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#startDate").datepicker();
+        $("#endDate").datepicker();
+    });
+
+    function filterData() {
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        // Thực hiện lọc dữ liệu dựa trên startDate và endDate
+        // Code lọc dữ liệu ở đây...
+    }
+</script>
+                            

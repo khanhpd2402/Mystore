@@ -1,0 +1,108 @@
+﻿@page
+@model MyStore.Pages.EditStaffModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Staff</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Edit Staff</h2>
+            <form method="post" onsubmit="return confirmUpdate()">
+                <input asp-for="Staff.StaffId" hidden class="form-control" />
+                <div class="form-group">
+                    <label asp-for="Staff.Name"></label>
+                    <input asp-for="Staff.Name" class="form-control" />
+                    <span asp-validation-for="Staff.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group password-container">
+                    <label asp-for="Staff.Password"></label>
+                    <input asp-for="Staff.Password" type="password" class="form-control" id="passwordInput" />
+                    <span asp-validation-for="Staff.Password" class="text-danger"></span>
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Staff.Role"></label>
+                    <select asp-for="Staff.Role" class="form-control">
+                        <option value="1" selected="@Model.Staff.Role == 1">Admin</option>
+                        <option value="0" selected="@Model.Staff.Role == 0">Staff</option>
+                    </select>
+                    <span asp-validation-for="Staff.Role" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+            <a asp-page="ListStaff" class="back-link">Back to List</a>
+        </div>
+    </div>
+
+    <script>
+        function confirmUpdate() {
+            return confirm('Are you sure you want to update this staff member?');
+        }
+
+        function togglePassword() {
+            var passwordInput = document.getElementById('passwordInput');
+            var passwordIcon = document.querySelector('.toggle-password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.textContent = '👁️';
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
