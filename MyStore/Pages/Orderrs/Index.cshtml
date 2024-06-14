@@ -1,0 +1,59 @@
+﻿@page 
+@model Assignment2.Pages.Orders.IndexModel
+
+@{
+    ViewData["Title"] = "MyOrder";
+}
+
+<h1>Index</h1>
+
+
+<form asp-page="./Create" method="post">
+  
+    <input type="submit" value="Create New" />
+</form>
+<form asp-page="./Index" method="post">
+    <label>Name:</label>
+    <input type="date" asp-for="@Model.Date" />
+    <input type="submit" value="Search" />
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.orders[0].OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.orders[0].OrderDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.orders == null || Model.orders.Count == 0)
+        {
+            <tr>
+                <td colspan="3  ">Chưa có đơn hàng nào.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.orders)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
