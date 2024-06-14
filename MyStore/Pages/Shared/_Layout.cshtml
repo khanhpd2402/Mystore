@@ -1,4 +1,4 @@
-﻿@using System.Text.Json;
+@using System.Text.Json;
 @using MyStore.Models;
 @{
     // Lấy chuỗi JSON từ session
@@ -8,6 +8,7 @@
     var staff = JsonSerializer.Deserialize<Staff>(jsonStaff);
     
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,7 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Test.styles.css" asp-append-version="true" />
+
 
     <!-- Fontfaces CSS-->
     <link href="~/css/font-face.css" rel="stylesheet" media="all">
@@ -61,15 +62,16 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
+
                         @if (staff != null)
                         {
                             @if (staff.Role == 1)
                             {
-                                <li>
-                                    <a href="#">
-                                        <i class="fas fa-archive"></i>Products
-                                    </a>
-                                </li>
+                                <li >
+                            <a  asp-page="/Products/Index">
+                                <i class="fas fa-tachometer-alt"></i>Product
+                            </a>
+                        </li>
                                 <li>
                                     <a href="#">
                                         <i class="fas  fa-square"></i>Categories
@@ -124,10 +126,10 @@
                             @if (staff.Role == 1)
                             {
                                 <li>
-                                    <a href="#">
-                                        <i class="fas fa-archive"></i>Products
-                                    </a>
-                                </li>
+                            <a asp-page="/Products/Index">
+                                <i class="fas fa-tachometer-alt"></i>Product
+                            </a>
+                        </li>
                                 <li>
                                     <a href="#">
                                         <i class="fas  fa-square"></i>Categories
@@ -191,6 +193,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
+
                             <form class="form-header">
                                 <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit">
@@ -399,7 +402,7 @@
     </script>
     <script src="~/vendor/circle-progress/circle-progress.min.js"></script>
     <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
+   
     <script src="~/vendor/select2/select2.min.js">
     </script>
 
@@ -410,6 +413,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

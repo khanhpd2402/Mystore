@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+
+using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
 using MyStore.Pages;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<MyStoreContext>();  
 
 // Thêm dịch vụ cần thiết cho session
 builder.Services.AddDistributedMemoryCache();
@@ -42,4 +45,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Products/Index");
+    return Task.CompletedTask;
+});
 app.Run();
