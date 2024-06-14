@@ -1,29 +1,38 @@
 ﻿@page
 @model MyStore.Pages.profileModel
 @{
-
+     ViewData["Title"] = "Profile";
 }
 <div class="d-flex justify-content-center">
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header">Profile</div>
             <div class="card-body card-block">
-                <form method="post" id="profileForm" asp-page-handler="EditUsername">
-                     <input asp-for="Staff.StaffId" hidden class="form-control" />
+                <form method="post" id="profileForm">
                     <div class="form-group">
                         @if (Model.ErrorMessage != null)
                         {
                             <p style="color:red;">@Model.ErrorMessage</p>
                         }
-                         @if (Model.ErrorMessage2 != null)
+                        @if (Model.ErrorMessage2 != null)
                         {
                             <p style="color:red;">@Model.ErrorMessage2</p>
                         }
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-user"></i>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <input placeholder="Username" disabled class="form-control" asp-for="Staff.Name">
                             </div>
-                            <input type="text" id="username" name="username" placeholder="Username" disabled class="form-control"   asp-for="Staff.Name" >
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group" hidden id="usernameDiv">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <input type="text" id="username" name="usernameNew" placeholder="New Staff Name" class="form-control" required>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -38,20 +47,20 @@
                         <button type="submit" class="btn btn-success btn-sm" id="submitlEditUserNameBtn" hidden>
                             <i class="fa a-check-square-o"></i> Submit
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm" id="cancelEditUserNameBtn" hidden>
+                        <button type="reset" class="btn btn-danger btn-sm" id="cancelEditUserNameBtn" hidden>
                             <i class="fa fa-ban"></i> Cancel
                         </button>
                     </div>
                 </form>
                 <div id="changpassDiv" hidden>
                     <form method="post" id="changpassForm" asp-page-handler="ChangePassword">
-                       
+
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <i class="fa fa-asterisk"></i>
                                 </div>
-                                <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password" class="form-control">
+                                <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -59,7 +68,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-asterisk"></i>
                                 </div>
-                                <input type="password" id="newPassword1" name="newPassword1" placeholder="New Password" class="form-control">
+                                <input type="password" id="newPassword1" name="newPassword1" placeholder="New Password" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -67,7 +76,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-asterisk"></i>
                                 </div>
-                                <input type="password" id="newPassword2" name="newPassword2" placeholder="Re-Password" class="form-control">
+                                <input type="password" id="newPassword2" name="newPassword2" placeholder="Re-Password" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-actions form-group">

@@ -16,6 +16,7 @@ public class AuthenticationMiddleware
 
     public async Task Invoke(HttpContext context)
     {
+        
         // Kiểm tra xem người dùng đã đăng nhập chưa
         if (!context.Session.Keys.Contains("Staff"))
         {

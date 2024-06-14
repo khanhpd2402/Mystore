@@ -19,7 +19,9 @@ namespace MyStore.Pages
 
         [BindProperty]
         public Staff Staff { get; set; }
+        [BindProperty]
         public string ErrorMessage { get; set; }
+        [BindProperty]
         public string ErrorMessage2 { get; set; }
 
         public IActionResult OnGet()
@@ -41,42 +43,33 @@ namespace MyStore.Pages
         }
 
         // Phương thức xử lý POST cho form Edit Username
-        public async Task<IActionResult> OnPostEditUsernameAsync()
+        public async Task<IActionResult> OnPostAsync(string usernameNew)
         {
+            //get session
             string jsonStaff = HttpContext.Session.GetString("Staff");
-
+            //check xem session co null khong
             if (string.IsNullOrEmpty(jsonStaff))
             {
                 return RedirectToPage("/Index");
             }
-
             Staff staff = JsonConvert.DeserializeObject<Staff>(jsonStaff);
-            if (staff != null)
-            {
-                Staff = _context.Staffs.FirstOrDefault(x => x.StaffId == staff.StaffId);
-            }
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            var staffToUpdate = await _context.Staffs.FindAsync(Staff.StaffId);
-
+            var staffToUpdate = await _context.Staffs.FindAsync(staff.StaffId);
+            
             if (staffToUpdate == null)
             {
                 return NotFound();
             }
-
+            Staff = staffToUpdate;
+           
             // Validate that the Name property is not null or empty
-            if (string.IsNullOrEmpty(Staff.Name))
+            if (string.IsNullOrEmpty(usernameNew))
             {
-                ModelState.AddModelError(nameof(Staff.Name), "Name is required.");
+                ErrorMessage = "Name is required.";
                 return Page();
             }
-
             // Kiểm tra xem username mới có trùng với username của bất kỳ người dùng nào khác không
             var existingStaff = await _context.Staffs
-                .FirstOrDefaultAsync(x => x.Name == Staff.Name && x.StaffId != Staff.StaffId);
+                .FirstOrDefaultAsync(x => x.Name == usernameNew.Trim() && x.StaffId != staff.StaffId);
 
             if (existingStaff != null)
             {
@@ -84,8 +77,9 @@ namespace MyStore.Pages
                 return Page();
             }
 
-            staffToUpdate.Name = Staff.Name;
-
+            staffToUpdate.Name = usernameNew;
+            staffToUpdate.Password = staff.Password;
+            staffToUpdate.Role = staff.Role;
             _context.Attach(staffToUpdate).State = EntityState.Modified;
 
             try
@@ -132,6 +126,11 @@ namespace MyStore.Pages
             if (newPassword1 != newPassword2)
             {
                 ErrorMessage2 = "The new passwords do not match.";
+                return Page();
+            } 
+            if (string.IsNullOrEmpty(newPassword1) || string.IsNullOrEmpty(newPassword2))
+            {
+                ErrorMessage2 = "The new passwords is required.";
                 return Page();
             }
 
