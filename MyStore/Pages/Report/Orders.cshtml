@@ -1,12 +1,23 @@
 ﻿@page
 @model MyStore.Pages.Report.OrdersModel
-
+@using System.Text.Json;
+@using MyStore.Models;
 @{
     ViewData["Title"] = "Orders";
+
+    // Lấy chuỗi JSON từ session
+    var jsonStaff = HttpContext.Session.GetString("Staff");
+
+    // Chuyển chuỗi JSON thành đối tượng User (đảm bảo đối tượng User phải có cấu trúc tương ứng với định dạng JSON đã lưu)
+    var staff = JsonSerializer.Deserialize<Staff>(jsonStaff);
+
 }
+
+
+
 <h1 class="title-5 m-b-35">Orders</h1>
 
-<form >
+<form>
     <!-- Các trường nhập liệu -->
     <div>
         <label asp-for="StartDate">Ngày bắt đầu:</label>
@@ -23,18 +34,21 @@
     </button>
 </form>
 <br />
+@if (staff != null)
+{
+    @if (staff.Role == 1)
+    {
+        <form asp-page="./Index" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    Find by First or Last name: <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                    <input type="submit" value="Search" class="btn btn-default" /> ||
+                    <a href="/Report/Orders">Back to full List</a>
+                </p>
+            </div>
+        </form>
 
-<form asp-page="./Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by First or Last name: <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-default" /> ||
-            <a href="/Report/Orders">Back to full List</a>
-        </p>
-    </div>
-</form>
-
-
+    }}
 
 <div class="table-responsive table--no-card m-b-30">
     <table class="table table-borderless table-striped table-earning">
@@ -50,7 +64,7 @@
         <tbody>
             @foreach (var item in Model.Order)
             {
-            <tr>
+                <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.OrderId)
                     </td>
@@ -66,7 +80,7 @@
                     <td>
                         <a asp-page="./OrderDetails" asp-route-id="@item.OrderId">Details</a>
                     </td>
-            </tr>
+                </tr>
             }
         </tbody>
     </table>
@@ -87,4 +101,4 @@
         // Code lọc dữ liệu ở đây...
     }
 </script>
-                            
+
