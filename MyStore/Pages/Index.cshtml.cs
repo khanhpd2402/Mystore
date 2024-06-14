@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyStore.Models;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MyStore.Pages
 {
@@ -34,7 +37,6 @@ namespace MyStore.Pages
                 string jsonStaff = JsonConvert.SerializeObject(staff);
                 // Tạo session cho người dùng
                 HttpContext.Session.SetString("Staff", jsonStaff);
-
                 return RedirectToPage("/Home");
             }
 

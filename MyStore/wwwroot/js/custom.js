@@ -6,23 +6,23 @@
     var submitlEditUserNameBtn = document.getElementById('submitlEditUserNameBtn');
     var submitChangePassBtn = document.getElementById('submitChangePassBtn');
     var cancelChangePassBtn = document.getElementById('cancelChangePassBtn');
-    var userNameInput = document.getElementById('username');
-    var roleInput = document.getElementById('role');
+    var usernameDiv = document.getElementById('usernameDiv');
+
 
     editUserNameBtn.addEventListener('click', function () {
-        userNameInput.disabled = false; // Bỏ vô hiệu hóa cho ô input username
+        usernameDiv.hidden = false; // Bỏ vô hiệu hóa cho ô input username
         editUserNameBtn.hidden = true;
         changePasswordBtn.hidden = true;
         cancelEditUserNameBtn.hidden = false;
         submitlEditUserNameBtn.hidden = false;
     });
-    submitlEditUserNameBtn.addEventListener('click', function () {
-        // Remove disabled attribute before form submission
-        userNameInput.disabled = false;
-    });
+    //submitlEditUserNameBtn.addEventListener('click', function () {
+    //    // Remove disabled attribute before form submission
+    //    userNameInput.hidden = false;
+    //});
 
     cancelEditUserNameBtn.addEventListener('click', function () {
-        userNameInput.disabled = true; // Bỏ vô hiệu hóa cho ô input username
+        usernameDiv.hidden = true;  // Bỏ vô hiệu hóa cho ô input username
         editUserNameBtn.hidden = false;
         changePasswordBtn.hidden = false;
         cancelEditUserNameBtn.hidden = true;
