@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace MyStore.Pages
 {
+    [Authorize(Policy = "AdminOnly")]
     public class ListStaffModel : PageModel
     {
         private readonly MyStoreContext _context;
@@ -29,6 +30,7 @@ namespace MyStore.Pages
 
             StaffList = await staffs.ToListAsync();
             //StaffList = await _context.Staffs.AsNoTracking().ToListAsync();
+
         }
     }
 }

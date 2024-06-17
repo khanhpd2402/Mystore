@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace MyStore.Pages.Products
 {
+    [Authorize(Policy = "AdminOnly")]
     public class IndexModel : PageModel
     {
         private readonly MyStore.Models.MyStoreContext _context;

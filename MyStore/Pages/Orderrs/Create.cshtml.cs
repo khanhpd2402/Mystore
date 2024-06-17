@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Authorization;
 namespace SE1726_Razor.Pages.Categories
 {
+    [Authorize(Policy = "StaffOnly")]
     public class CreateModel : PageModel
     {
         private readonly MyStoreContext _context;

@@ -48,7 +48,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
+                        <a class="logo"asp-page="/Home">
                             <img src="~/assets/img/icon/logo.png" alt="CoolAdmin" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
@@ -72,22 +72,20 @@
                                         <i class="fas fa-tachometer-alt"></i>Product
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Orderrs/Index">MyOrder</a>
-                                </li>
+                               
                                 <li>
-                                    <a href="#">
+                                    <a asp-page="/Categories/Index">
                                         <i class="fas  fa-square"></i>Categories
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                     <a asp-page="/Report/Orders">
                                         <i class="fas fa-chart-bar"></i>Report
                                     </a>
                                 </li>
                                 <li>
-                                    <a asp-area="" asp-page="ListStaff">
+                                    <a asp-area="" asp-page="/ListStaff">
                                         <i class="far fa-user"></i>Staff Manager
                                     </a>
                                 </li>
@@ -95,12 +93,12 @@
                             @if (staff.Role == 0)
                             {
                                 <li>
-                                    <a href="#">
+                                     <a asp-page="/Report/Orders">
                                         <i class="fas fa-chart-bar"></i>Report
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a asp-page="/Orderrs/Index">
                                         <i class="fas fa-shopping-cart"></i>Order
                                     </a>
                                 </li>
@@ -116,7 +114,7 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
+                <a class="logo"asp-page="/Home">
                     <img src="@Url.Content("~/assets/img/icon/logo.png")" alt="Cool Admin" />
                 </a>
             </div>
@@ -134,15 +132,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                   <a asp-page="/Categories/Index">
                                         <i class="fas  fa-square"></i>Categories
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Orderrs/Index">MyOrder</a>
-                                </li>
                                 <li>
-                                    <a asp-area="" asp-page="ListStaff">
+                                    <a asp-area="" asp-page="/ListStaff">
                                         <i class="far fa-user"></i>Staff Manager
                                     </a>
                                 </li>
@@ -161,7 +156,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a asp-page="/Orderrs/Index">
                                         <i class="fas fa-shopping-cart"></i>Order
                                     </a>
                                 </li>
@@ -322,10 +317,10 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="@Url.Content("~/assets/img/icon/avatar-01.jpg")" alt="John Doe" />
+                                            <img src="@Url.Content("~/assets/img/icon/avatar-01.jpg")"/>
                                         </div>
                                         <div class="content">
-                                            <a asp-area="" asp-page="profile">
+                                            <a asp-area="" asp-page="/profile">
                                                 @if (staff != null)
                                                 {
                                                     @staff.Name
@@ -335,13 +330,13 @@
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
-                                                    <a asp-area="" asp-page="profile">
+                                                    <a asp-area="" asp-page="/profile">
                                                         <img src="@Url.Content("~/assets/img/icon/avatar-01.jpg")" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a asp-area="" asp-page="profile">
+                                                        <a asp-area="" asp-page="/profile">
                                                             @if (staff != null)
                                                             {
                                                                 <span>@staff.Name</span>

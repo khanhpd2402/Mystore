@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyStore.Pages
 {
+    [Authorize(Policy = "AdminOnly")]
     public class EditStaffModel : PageModel
     {
         private readonly MyStoreContext _context;

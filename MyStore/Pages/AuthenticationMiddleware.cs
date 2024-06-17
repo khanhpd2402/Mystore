@@ -14,22 +14,19 @@ public class AuthenticationMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context)
+    public async Task InvokeAsync(HttpContext context)
     {
-        
-        // Kiểm tra xem người dùng đã đăng nhập chưa
-        if (!context.Session.Keys.Contains("Staff"))
+        if (context.User.Identity.IsAuthenticated)
         {
-            // Kiểm tra xem đường dẫn hiện tại có phải là đường dẫn đăng nhập không
-            if (!context.Request.Path.StartsWithSegments("/"))
+            var roleClaim = context.User.FindFirst("Role");
+            if (roleClaim == null || roleClaim.Value != "1")
             {
-                // Nếu không, chuyển hướng đến trang đăng nhập
-                context.Response.Redirect("/Index");
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync("Page not found");
                 return;
             }
         }
 
-        // Nếu đã đăng nhập hoặc đang ở trang đăng nhập, tiếp tục xử lý yêu cầu
         await _next(context);
     }
 }

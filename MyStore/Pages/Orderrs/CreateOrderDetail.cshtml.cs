@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Assignment2.Pages.Order
 {
+    [Authorize(Policy = "StaffOnly")]
     public class CreateOrderDetailModel : PageModel
     {
         [BindProperty]

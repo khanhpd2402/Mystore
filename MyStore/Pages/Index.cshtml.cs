@@ -27,9 +27,8 @@ namespace MyStore.Pages
         public void OnGet()
         {
         }
-        public  IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync(string ReturnUrl = null)
         {
-          
             var staff = _context.Staffs.FirstOrDefault(x => x.Name == Username && x.Password == Password);
             if (staff != null)
             {
@@ -37,7 +36,20 @@ namespace MyStore.Pages
                 string jsonStaff = JsonConvert.SerializeObject(staff);
                 // Tạo session cho người dùng
                 HttpContext.Session.SetString("Staff", jsonStaff);
-                return RedirectToPage("/Home");
+
+                var claims = new[]
+                {
+            new Claim(ClaimTypes.Name, staff.Name),
+            new Claim("Role", staff.Role.ToString()) // Thêm claim cho role
+        };
+
+                var identity = new ClaimsIdentity(claims, "MyCookieAuthenticationScheme");
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync("MyCookieAuthenticationScheme", principal);
+
+                // Chuyển hướng người dùng đến trang mà họ đã yêu cầu ban đầu (nếu có)
+
+                return RedirectToPage("/Home"); // Chuyển hướng về trang chủ nếu không có returnUrl
             }
 
             // Trả về lỗi nếu thông tin đăng nhập không đúng
@@ -45,8 +57,10 @@ namespace MyStore.Pages
             return Page();
         }
 
-        public IActionResult OnGetLogout()
+
+        public async Task <IActionResult> OnGetLogout()
         {
+            await HttpContext.SignOutAsync("MyCookieAuthenticationScheme");
             // Xóa session khi người dùng đăng xuất
             HttpContext.Session.Clear();
             return RedirectToPage("/Index");

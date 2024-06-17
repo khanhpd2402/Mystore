@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyStore.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace MyStore.Pages
 {
+    [Authorize(Policy = "AdminOnly")]
     public class CreateStaffModel : PageModel
     {
         private readonly MyStoreContext _context;

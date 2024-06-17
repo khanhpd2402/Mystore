@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace MyStore.Pages
 {
+    [Authorize(Policy = "AdminOnly")]
     public class DeleteStaffModel : PageModel
     {
         private readonly MyStoreContext _context;

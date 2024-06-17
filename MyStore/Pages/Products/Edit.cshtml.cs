@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Models;
 using Microsoft.Extensions.Logging; // Thêm namespace này
-
+using Microsoft.AspNetCore.Authorization;
 namespace MyStore.Pages.Products
 {
+    [Authorize(Policy = "AdminOnly")]
     public class EditModel : PageModel
     {
         private readonly MyStore.Models.MyStoreContext _context;

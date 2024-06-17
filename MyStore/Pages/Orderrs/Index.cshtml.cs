@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Assignment2.Pages.Orders
 {
+    [Authorize(Policy = "StaffOnly")]
     public class IndexModel : PageModel
     {
         private readonly MyStoreContext _context;
