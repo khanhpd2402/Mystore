@@ -48,6 +48,7 @@ namespace MyStore.Pages.Report
             EndDate = (endDate?.Date ?? DateTime.Today.Date).AddDays(1).AddTicks(-1);
 
             IQueryable<Order> query = _context.Orders;
+            IQueryable<Order> query1 = _context.Orders.Include(o => o.Staff);
 
             if (role == 1)
             {
@@ -65,11 +66,11 @@ namespace MyStore.Pages.Report
             {
                 if (int.TryParse(searchString, out int searchStaffId))
                 {
-                    query = query.Where(s => s.Staff.StaffId == searchStaffId || s.Staff.Name.Contains(searchString));
+                    query = query1.Where(s => s.Staff.StaffId == searchStaffId || s.Staff.Name.Contains(searchString));
                 }
                 else
                 {
-                    query = query.Where(s => s.Staff.Name.Contains(searchString));
+                    query = query1.Where(s => s.Staff.Name.Contains(searchString));
                 }
             }
 
