@@ -18,6 +18,8 @@ namespace MyStore.Pages.Report
 
         public string CurrentFilter { get; set; }
 
+        public int UserRole { get; set; }
+
         public OrdersModel(MyStore.Models.MyStoreContext context)
         {
             _context = context;
@@ -27,7 +29,6 @@ namespace MyStore.Pages.Report
 
         public async Task<IActionResult> OnGetAsync(DateTime? startDate, DateTime? endDate, string searchString)
         {
-
             var sessionData = HttpContext.Session.GetString("Staff");
             if (sessionData == null)
             {
@@ -38,10 +39,13 @@ namespace MyStore.Pages.Report
             int role = currentUser.Role;
             int staffId = currentUser.StaffId;
 
+            // Set user role for use in Razor Page
+            UserRole = role;
+
             CurrentFilter = searchString;
 
-            StartDate = startDate ?? DateTime.Today.AddMonths(-1);
-            EndDate = endDate ?? DateTime.Today;
+            StartDate = startDate?.Date ?? DateTime.Today.AddMonths(-1).Date;
+            EndDate = (endDate?.Date ?? DateTime.Today.Date).AddDays(1).AddTicks(-1);
 
             IQueryable<Order> query = _context.Orders;
 
