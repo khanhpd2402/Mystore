@@ -45,7 +45,7 @@ namespace MyStore.Pages.Report
             CurrentFilter = searchString;
 
             StartDate = startDate?.Date ?? DateTime.Today.AddMonths(-1).Date;
-            EndDate = (endDate?.Date ?? DateTime.Today.Date).AddDays(1).AddTicks(-1);
+            EndDate = endDate?.Date ?? DateTime.Today.Date;
 
             IQueryable<Order> query = _context.Orders;
             IQueryable<Order> query1 = _context.Orders.Include(o => o.Staff);
